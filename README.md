@@ -3,7 +3,7 @@ This README walks you through a hands-on Linux lab simulating a real-world
 system administration scenario at a growing technology
 company. In this lab, we set up 
 user accounts, groups, and file permissions for two departments **(Marketing 
-and IT)** using a Kali Linux virtual machine. The obective of the lab was for us to
+and IT)** using a Kali Linux virtual machine. The obective of the lab was to
 understand how to manage users and groups, control file ownership, and apply 
 the correct permissions to keep files secure.
 
@@ -37,7 +37,7 @@ sudo usermod -aG marketing carol_m
 sudo usermod -aG marketing david_m
 sudo usermod -aG marketing emma_m
 ```
-**What I lerned here:** `usermod -aG` appends the user to the specified group without removing them from other groups.
+**What I learned here:** `usermod -aG` appends the user to the specified group without removing them from other groups.
 
 #### 4: Created the Shared Marketing Directory
 ```bash
@@ -62,7 +62,7 @@ sudo chown carol_m /home/shared/marketing/carol_report.txt
 sudo chown david_m /home/shared/marketing/david_report.txt
 sudo chown emma_m /home/shared/marketing/emma_report.txt
 ```
-**What I lerned here:** `chown` changes the owner of the file to the respective user.
+**What I learned here:** `chown` changes the owner of the file to the respective user.
 
 #### 7: Set File Permissions (700)
 ```bash
@@ -124,7 +124,7 @@ sudo touch /home/shared/itdept/project_specs.txt
 ```bash
 sudo chown :itdept /home/shared/itdept/project_specs.txt
 ```
-**What I lerned here:** Using `:itdept` (with no user before the colon) changes only the **group owner** of the file without modifying the user owner.
+**What I learned here:** Using `:itdept` (with no user before the colon) changes only the **group owner** of the file without modifying the user owner.
 
 
 #### 7: Set File Permissions (770)
