@@ -167,11 +167,8 @@ All files in their respective directories and their permissions
 - **The `-aG` flag matters:** When adding a user to a group, leaving out `-a` 
 would remove them from all their existing groups
 
-- **`chown` and `chmod` are not the same:** I initially thought they overlapped, 
-but `chown` determines *who* owns the file while `chmod` determines *what they can do* with it. Both are needed to fully secure a file
-
 - **Permission numbers are logical:** Once I understood that read=4, write=2, 
 execute=1, the numbers made sense. 7 means full access, 0 means none, no memorization needed 😂
 
 - **Real-World Application:** I now understand why companies have strict file 
-permissions — one wrong setting could expose private files to everyone on the network
+permissions, one wrong setting could expose private files to everyone on the network
