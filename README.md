@@ -1,8 +1,11 @@
 # Linux User Management & File Permissions Lab
-This readme walks you through 
-
-## Objective
-The objective of this lab is to set up user accounts, groups, and file permissions for two departments (Marketing and IT) on a Linux system, simulating a real-world sysadmin scenario for a growing Tech Company.
+This README walks you through a hands-on Linux lab simulating a real-world 
+system administration scenario at a growing technology
+company. In this lab, we set up 
+user accounts, groups, and file permissions for two departments **(Marketing 
+and IT)** using a Kali Linux virtual machine. The obective of the lab was for us to
+understand how to manage users and groups, control file ownership, and apply 
+the correct permissions to keep files secure.
 
 ## Tools Used
 - Kali Linux (Virtual Machine)
@@ -69,7 +72,7 @@ sudo chmod 700 /home/shared/marketing/carol_report.txt
 sudo chmod 700 /home/shared/marketing/david_report.txt
 sudo chmod 700 /home/shared/marketing/emma_report.txt
 ```
-**Notes: **`chmod 700` gives the owner full permissions (rwx) while the group and others have no access (---).
+**Notes:**`chmod 700` gives the owner full permissions (rwx) while the group and others have no access (---).
 
 **In Summary:(r-4, w-2, x-1)** 
 
@@ -80,3 +83,95 @@ sudo chmod 700 /home/shared/marketing/emma_report.txt
 | 0 | Others | --- |
 
 ---
+
+
+### Part 2: The IT Department
+
+#### 1: Created the IT Group
+```bash
+sudo groupadd itdept
+```
+
+#### 2: Created 5 IT Users for the IT Department (frank_it, grace_it, henry_it, iris_it, and jack_it)
+```bash
+sudo useradd -m frank_it
+sudo useradd -m grace_it
+sudo useradd -m henry_it
+sudo useradd -m iris_it
+sudo useradd -m jack_it
+```
+
+#### 3: Added the Users to the IT Group
+```bash
+sudo usermod -aG itdept frank_it
+sudo usermod -aG itdept grace_it
+sudo usermod -aG itdept henry_it
+sudo usermod -aG itdept iris_it
+sudo usermod -aG itdept jack_it
+```
+
+#### 4: Created the Shared IT Directory
+```bash
+sudo mkdir -p /home/shared/itdept
+```
+
+#### 5: Created the Shared Project File (project_specs.txt)
+```bash
+sudo touch /home/shared/itdept/project_specs.txt
+```
+
+#### 6: Set Group Ownership
+```bash
+sudo chown :itdept /home/shared/itdept/project_specs.txt
+```
+**What I lerned here:** Using `:itdept` (with no user before the colon) changes only the **group owner** of the file without modifying the user owner.
+
+
+#### 7: Set File Permissions (770)
+```bash
+sudo chmod 770 /home/shared/itdept/project_specs.txt
+```
+**Notes:**`chmod 770` gives the owner and group full permissions (rwx) while others have no access (---).
+
+| Number | Who | Permissions |
+|--------|-----|-------------|
+| 7 | Owner | rwx |
+| 7 | Group | rwx |
+| 0 | Others | --- |
+
+**Verified My Results:** to see the groups, their users, the files and permissions
+```bash
+ls -l /home/shared/marketing
+ls -l /home/shared/itdept
+getent group marketing
+getent group itdept
+```
+
+
+## Screenshots of Results
+![linux User Management   File Permissions Lab](https://github.com/user-attachments/assets/26d5ca83-ca59-40e3-a981-ffc33122e533)
+
+All files created
+
+![groups](https://github.com/user-attachments/assets/1934fe4f-f9e0-4f23-ad1f-5846db11ac99)
+
+The two groups and their users
+
+![files](https://github.com/user-attachments/assets/c0523472-7c15-4ed8-9050-12cf810f2f73)
+
+All files in their respective directories and their permissions
+
+
+## Key Observations / Lessons Learned
+
+- **The `-aG` flag matters:** When adding a user to a group, leaving out `-a` 
+would remove them from all their existing groups
+
+- **`chown` and `chmod` are not the same:** I initially thought they overlapped, 
+but `chown` determines *who* owns the file while `chmod` determines *what they can do* with it. Both are needed to fully secure a file
+
+- **Permission numbers are logical:** Once I understood that read=4, write=2, 
+execute=1, the numbers made sense. 7 means full access, 0 means none, no memorization needed 😂
+
+- **Real-World Application:** I now understand why companies have strict file 
+permissions — one wrong setting could expose private files to everyone on the network
